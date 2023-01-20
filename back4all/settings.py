@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'maxbit.apps.MaxbitConfig',
+    'alfanet.apps.AlfanetConfig',
     'amocrm.apps.AmocrmConfig',
     'frontend.apps.FrontendConfig',
     'rest_framework',

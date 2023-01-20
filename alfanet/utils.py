@@ -1,20 +1,20 @@
 import logging
 from time import sleep
 
-from amocrm.models import Client
-from django.http import JsonResponse
 import requests
+from django.http import JsonResponse
 
+from amocrm.models import Client
 from amocrm.utils.upd_access_token import update_access_token
 
 logger = logging.getLogger(__name__)
 
 
-def get_leads(request, pk, operation=None):
+def get_all_leads(pk):
     client = Client.objects.get(pk=pk)
     head = {"Authorization": f'Bearer {client.access_token}', "Content-Type": "application/json"}
     status = 'application/hal+json'
-    i = 0
+    i = 80
     leads = []
     try:
         while status == 'application/hal+json':
@@ -37,13 +37,7 @@ def get_leads(request, pk, operation=None):
                 update_access_token(client)
             # response = requests.get(f'https://{client.amo_url}/api/v4/leads/custom_fields', headers=head)
         logger.info(f'{client} get_leads ok')
-        if operation == 'json':
-            return JsonResponse(leads, safe=False)
-        else:
-            return leads
+        return leads
     except Exception as e:
         logger.error(f'{client} get_leads {e}')
-        return JsonResponse({e}, safe=False)
-    # res = response.json()['_embedded']['leads']
-
-
+        return False
