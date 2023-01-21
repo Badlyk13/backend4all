@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Загрузка МТС
+{% endblock %}
+
+{% block body %}
+{% if status %}
+  <h2>Статусы обновлены</h2>
+{% endif %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="id_file" class="form-label">Загрузите dealer-order-report.csv</label>
+    <input class="form-control" type="file" id="id_file" name="file">
+  </div>
+
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Загрузить</button>
+  </div>
+</form>
+
+{% endblock %}
